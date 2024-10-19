@@ -1,19 +1,29 @@
-version: '3.8'
+
 
 services:
   backend:
     build:
       context: ./backend
-    ports:
-      - "8000:8000"
     volumes:
       - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://user:password@db:5432/mydatabase
 
   frontend:
     build:
-      context: ./frontend/myfrontend
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend/myfrontend:/app
 
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"

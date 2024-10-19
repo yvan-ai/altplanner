@@ -1,17 +1,15 @@
 # backend/Dockerfile
-FROM python:3.9
 
-# Créez un répertoire pour l'application
+FROM python:3.10
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 WORKDIR /app
 
-# Copiez les fichiers nécessaires
-COPY requirements.txt . 
-RUN pip install -r requirements.txt
+COPY requirements.txt ./
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copiez le reste du code
 COPY . .
 
-# Commande pour démarrer le serveur
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-
