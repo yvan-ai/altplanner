@@ -5,7 +5,7 @@ from .models import Utilisateur
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Utilisateur
-        fields = [ 'email', 'password', 'user_type','first_name','last_name','is_responsable_cursus']
+        fields = [ 'email', 'password', 'user_type','first_name','last_name']
 
     def create(self, validated_data):
         # Hash the password before saving the user
@@ -14,7 +14,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
             user_type=validated_data['user_type'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            is_responsable_cursus=validated_data['is_responsable_cursus'],
 
 
         )

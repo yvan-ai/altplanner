@@ -34,7 +34,7 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30)
     #date_of_birth = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
-    is_responsable_cursus = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
 
     objects = UserManager()
@@ -74,23 +74,14 @@ class JournalDeFormation(models.Model):
 
 class RapportFinal(models.Model):
     numero = models.OneToOneField(JournalDeFormation, primary_key=True, on_delete=models.CASCADE)
-    document = models.FileField(upload_to='rapportFinal_doc/',null=True,blank=True)
     date_publication = models.DateField()
 
 class RapportPING(models.Model):
     numero = models.OneToOneField(JournalDeFormation, primary_key=True, on_delete=models.CASCADE)
-    document = models.FileField(upload_to='ping_doc/',null=True,blank=True)
-
     date_publication = models.DateField()
 
 class Presentation(models.Model):
     numero = models.OneToOneField(JournalDeFormation, primary_key=True, on_delete=models.CASCADE)
-    document = models.FileField(upload_to='presentation_doc/',null=True,blank=True)
-    date_publication = models.DateField()
-
-class FicheSynthese(models.Model):
-    numero = models.OneToOneField(JournalDeFormation, primary_key=True, on_delete=models.CASCADE)
-    document = models.FileField(upload_to='ficheSyn_doc/',null=True,blank=True)
     date_publication = models.DateField()
 
 class MaitreApprentissage(models.Model):
@@ -202,7 +193,10 @@ class Semestre(models.Model):
     date_fin = models.DateField()
     echeance = models.ForeignKey(Echeance, on_delete=models.CASCADE)
 
-
+# Fiche de Synthèse
+class FicheDeSynthese(models.Model):
+    numero = models.OneToOneField(JournalDeFormation, primary_key=True, on_delete=models.CASCADE)
+    date_publication = models.DateField()
 
 # Membre Jury
 class MembreJury(models.Model):
